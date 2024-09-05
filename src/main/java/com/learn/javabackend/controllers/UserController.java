@@ -27,5 +27,9 @@ public class UserController{
     public UserEntity getUserById(@PathVariable String Id){
         return userService.getUserById(Id);
     }
+    @PutMapping("/{Id}")
+    public UserEntity updateUser(@PathVariable String Id, @RequestBody UserEntity userData){
+        return userService.updateUser(Id, userData);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.learn.javabackend.services;
 
 import com.learn.javabackend.entity.UserEntity;
 import com.learn.javabackend.repository.UserRepo;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,23 @@ public class UserService {
     public UserEntity getUserById(String Id){
         Optional<UserEntity> user = userRepo.findById(Id);
         return user.orElse(null);
+    }
+
+    public UserEntity updateUser(String Id, UserEntity updatedData){
+        Optional<UserEntity> user = userRepo.findById(Id);
+        if(user.isPresent()){
+            UserEntity existingUser = user.get();
+
+            if(updatedData.getTitle()!=null){
+                existingUser.setTitle(updatedData.getTitle());
+            }
+            if(updatedData.getContent()!=null){
+                existingUser.setContent(updatedData.getContent());
+            }
+            return userRepo.save(existingUser);
+        }
+        else {
+            throw new RuntimeException("user not found with id: "+ Id);
+        }
     }
 }
