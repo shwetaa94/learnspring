@@ -41,9 +41,7 @@ public class UserService {
             }
             return userRepo.save(existingUser);
         }
-        else {
-            throw new RuntimeException("user not found with id: "+ Id);
-        }
+        return user.orElse(null);
     }
 
     public UserEntity deleteUser(String Id){
