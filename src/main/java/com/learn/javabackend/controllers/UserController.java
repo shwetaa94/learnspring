@@ -23,5 +23,9 @@ public class UserController{
     public List<UserEntity> getAllUsers(){
         return userService.getAllUsers();
     }
+    @GetMapping("/{Id}")
+    public UserEntity getUserById(@PathVariable String Id){
+        return userService.getUserById(Id);
+    }
 
 }
