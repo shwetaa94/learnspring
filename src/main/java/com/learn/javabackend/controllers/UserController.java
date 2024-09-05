@@ -5,6 +5,8 @@ import com.learn.javabackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController{
@@ -16,4 +18,10 @@ public class UserController{
         userService.createUser(userData);
         return "Data Saved Successfully";
     }
+
+    @GetMapping
+    public List<UserEntity> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
 }
