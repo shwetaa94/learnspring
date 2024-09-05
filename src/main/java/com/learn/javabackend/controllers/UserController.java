@@ -32,4 +32,9 @@ public class UserController{
         return userService.updateUser(Id, userData);
     }
 
+    @DeleteMapping("/{Id}")
+    public UserEntity updateUser(@PathVariable String Id){
+        return userService.deleteUser(Id);
+    }
+
 }

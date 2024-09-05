@@ -45,4 +45,12 @@ public class UserService {
             throw new RuntimeException("user not found with id: "+ Id);
         }
     }
+
+    public UserEntity deleteUser(String Id){
+        Optional<UserEntity> user = userRepo.findById(Id);
+        if(user.isPresent()){
+             userRepo.deleteById(Id);
+        }
+        return user.orElse(null);
+    }
 }
