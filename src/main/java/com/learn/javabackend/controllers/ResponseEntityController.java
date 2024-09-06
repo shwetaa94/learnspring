@@ -17,27 +17,27 @@ public class ResponseEntityController {
     private ResponseEntityService todoService;
 
     @PostMapping
-    public ResponseEntity<Response<String>> createUser(@RequestBody TodoEntity userData) {
-        return todoService.createUser(userData);
+    public ResponseEntity<Response<String>> createTodo(@RequestBody TodoEntity todoData) {
+        return todoService.createTodo(todoData);
     }
 
     @GetMapping
     public ResponseEntity<Response<List<TodoEntity>>> getAllUsers() {
-        return todoService.getAllUsers();
+        return todoService.getAllTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<TodoEntity>> getUserById(@PathVariable String id) {
-        return todoService.getUserById(id);
+    public ResponseEntity<Response<TodoEntity>> getTodoById(@PathVariable String id) {
+        return todoService.getTodoById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<TodoEntity>> updateUser(@PathVariable String id, @RequestBody TodoEntity userData) {
-        return todoService.updateUser(id, userData);
+    public ResponseEntity<Response<TodoEntity>> updateTodo(@PathVariable String id, @RequestBody TodoEntity userData) {
+        return todoService.updateTodo(id, userData);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<String>> deleteUser(@PathVariable String id) {
-        return todoService.deleteUser(id);
+    public ResponseEntity<Response<String>> deleteTodor(@PathVariable String id) {
+        return todoService.deleteTodo(id);
     }
 }

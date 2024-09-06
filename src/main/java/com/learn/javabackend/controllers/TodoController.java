@@ -14,27 +14,27 @@ public class TodoController {
     private TodoService todoService;
 
     @PostMapping
-    public String createUser(@RequestBody TodoEntity userData){
-        todoService.createUser(userData);
+    public String createTodo(@RequestBody TodoEntity todoData){
+        todoService.createTodo(todoData);
         return "Data Saved Successfully";
     }
 
     @GetMapping
-    public List<TodoEntity> getAllUsers(){
-        return todoService.getAllUsers();
+    public List<TodoEntity> getAllTodos(){
+        return todoService.getAllTodos();
     }
     @GetMapping("/{Id}")
-    public TodoEntity getUserById(@PathVariable String Id){
-        return todoService.getUserById(Id);
+    public TodoEntity getTodoById(@PathVariable String Id){
+        return todoService.getTodoById(Id);
     }
     @PutMapping("/{Id}")
-    public TodoEntity updateUser(@PathVariable String Id, @RequestBody TodoEntity userData){
-        return todoService.updateUser(Id, userData);
+    public TodoEntity updateTodo(@PathVariable String Id, @RequestBody TodoEntity userData){
+        return todoService.updateTodo(Id, userData);
     }
 
     @DeleteMapping("/{Id}")
-    public TodoEntity updateUser(@PathVariable String Id){
-        return todoService.deleteUser(Id);
+    public TodoEntity deleteUser(@PathVariable String Id){
+        return todoService.deleteTodo(Id);
     }
 
 }

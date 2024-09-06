@@ -17,20 +17,20 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public void createUser(TodoEntity userData){
-        todoRepository.insert(userData);
+    public void createTodo(TodoEntity todoData){
+        todoRepository.insert(todoData);
     }
 
-    public List<TodoEntity> getAllUsers(){
+    public List<TodoEntity> getAllTodos(){
         return todoRepository.findAll();
     }
 
-    public TodoEntity getUserById(String Id){
+    public TodoEntity getTodoById(String Id){
         Optional<TodoEntity> user = todoRepository.findById(Id);
         return user.orElse(null);
     }
 
-    public TodoEntity updateUser(String Id, TodoEntity updatedData){
+    public TodoEntity updateTodo(String Id, TodoEntity updatedData){
         Optional<TodoEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
             TodoEntity existingUser = user.get();
@@ -46,7 +46,7 @@ public class TodoService {
         return user.orElse(null);
     }
 
-    public TodoEntity deleteUser(String Id){
+    public TodoEntity deleteTodo(String Id){
         Optional<TodoEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
              todoRepository.deleteById(Id);

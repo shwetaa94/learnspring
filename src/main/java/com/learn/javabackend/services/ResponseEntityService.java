@@ -17,19 +17,19 @@ public class ResponseEntityService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public ResponseEntity<Response<String>> createUser(TodoEntity userData) {
-        todoRepository.save(userData);
+    public ResponseEntity<Response<String>> createTodo(TodoEntity todoData) {
+        todoRepository.save(todoData);
         Response<String> response = new Response<>("success", "User created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Response<List<TodoEntity>>> getAllUsers() {
+    public ResponseEntity<Response<List<TodoEntity>>> getAllTodos() {
         List<TodoEntity> users = todoRepository.findAll();
         Response<List<TodoEntity>> response = new Response<>("success", "Users retrieved successfully", users);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public ResponseEntity<Response<TodoEntity>> getUserById(String id) {
+    public ResponseEntity<Response<TodoEntity>> getTodoById(String id) {
         Optional<TodoEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
             Response<TodoEntity> response = new Response<>("success", "User retrieved successfully", user.get());
@@ -40,7 +40,7 @@ public class ResponseEntityService {
         }
     }
 
-    public ResponseEntity<Response<TodoEntity>> updateUser(String id, TodoEntity updatedData) {
+    public ResponseEntity<Response<TodoEntity>> updateTodo(String id, TodoEntity updatedData) {
         Optional<TodoEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
             TodoEntity existingUser = user.get();
@@ -59,7 +59,7 @@ public class ResponseEntityService {
         }
     }
 
-    public ResponseEntity<Response<String>> deleteUser(String id) {
+    public ResponseEntity<Response<String>> deleteTodo(String id) {
         Optional<TodoEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
             todoRepository.deleteById(id);
