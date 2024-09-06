@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class User2Service {
+public class ResponseEntityService {
 
     @Autowired
     private UserRepo userRepo;
@@ -64,7 +64,7 @@ public class User2Service {
         if (user.isPresent()) {
             userRepo.deleteById(id);
             Response<String> response = new Response<>("success", "User deleted successfully");
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } else {
             Response<String> response = new Response<>("error", "User not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
