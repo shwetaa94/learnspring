@@ -1,9 +1,7 @@
 package com.learn.javabackend.services;
 
 import com.learn.javabackend.entity.UserEntity;
-import com.learn.javabackend.repository.UserRepo;
-import org.apache.catalina.User;
-import org.bson.types.ObjectId;
+import com.learn.javabackend.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,26 +12,26 @@ import java.util.Optional;
 
 @Component
 @Service
-public class UserService {
+public class TodoService {
 
     @Autowired
-    private UserRepo userRepo;
+    private TodoRepository todoRepository;
 
     public void createUser(UserEntity userData){
-        userRepo.insert(userData);
+        todoRepository.insert(userData);
     }
 
     public List<UserEntity> getAllUsers(){
-        return userRepo.findAll();
+        return todoRepository.findAll();
     }
 
     public UserEntity getUserById(String Id){
-        Optional<UserEntity> user = userRepo.findById(Id);
+        Optional<UserEntity> user = todoRepository.findById(Id);
         return user.orElse(null);
     }
 
     public UserEntity updateUser(String Id, UserEntity updatedData){
-        Optional<UserEntity> user = userRepo.findById(Id);
+        Optional<UserEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
             UserEntity existingUser = user.get();
 
@@ -43,15 +41,15 @@ public class UserService {
             if(updatedData.getContent()!=null){
                 existingUser.setContent(updatedData.getContent());
             }
-            return userRepo.save(existingUser);
+            return todoRepository.save(existingUser);
         }
         return user.orElse(null);
     }
 
     public UserEntity deleteUser(String Id){
-        Optional<UserEntity> user = userRepo.findById(Id);
+        Optional<UserEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
-             userRepo.deleteById(Id);
+             todoRepository.deleteById(Id);
         }
         return user.orElse(null);
     }

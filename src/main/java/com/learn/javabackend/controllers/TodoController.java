@@ -1,41 +1,40 @@
 package com.learn.javabackend.controllers;
 
 import com.learn.javabackend.entity.UserEntity;
-import com.learn.javabackend.services.UserService;
-import org.bson.types.ObjectId;
+import com.learn.javabackend.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
-public class UserController{
+@RequestMapping("/todo")
+public class TodoController {
     @Autowired
-    private UserService userService;
+    private TodoService todoService;
 
     @PostMapping
     public String createUser(@RequestBody UserEntity userData){
-        userService.createUser(userData);
+        todoService.createUser(userData);
         return "Data Saved Successfully";
     }
 
     @GetMapping
     public List<UserEntity> getAllUsers(){
-        return userService.getAllUsers();
+        return todoService.getAllUsers();
     }
     @GetMapping("/{Id}")
     public UserEntity getUserById(@PathVariable String Id){
-        return userService.getUserById(Id);
+        return todoService.getUserById(Id);
     }
     @PutMapping("/{Id}")
     public UserEntity updateUser(@PathVariable String Id, @RequestBody UserEntity userData){
-        return userService.updateUser(Id, userData);
+        return todoService.updateUser(Id, userData);
     }
 
     @DeleteMapping("/{Id}")
     public UserEntity updateUser(@PathVariable String Id){
-        return userService.deleteUser(Id);
+        return todoService.deleteUser(Id);
     }
 
 }

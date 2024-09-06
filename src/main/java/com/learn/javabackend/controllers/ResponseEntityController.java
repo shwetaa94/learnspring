@@ -14,30 +14,30 @@ import java.util.List;
 public class ResponseEntityController {
 
     @Autowired
-    private ResponseEntityService userService;
+    private ResponseEntityService todoService;
 
     @PostMapping
     public ResponseEntity<Response<String>> createUser(@RequestBody UserEntity userData) {
-        return userService.createUser(userData);
+        return todoService.createUser(userData);
     }
 
     @GetMapping
     public ResponseEntity<Response<List<UserEntity>>> getAllUsers() {
-        return userService.getAllUsers();
+        return todoService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<UserEntity>> getUserById(@PathVariable String id) {
-        return userService.getUserById(id);
+        return todoService.getUserById(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Response<UserEntity>> updateUser(@PathVariable String id, @RequestBody UserEntity userData) {
-        return userService.updateUser(id, userData);
+        return todoService.updateUser(id, userData);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Response<String>> deleteUser(@PathVariable String id) {
-        return userService.deleteUser(id);
+        return todoService.deleteUser(id);
     }
 }

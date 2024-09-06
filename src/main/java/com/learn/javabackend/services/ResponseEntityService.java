@@ -1,7 +1,7 @@
 package com.learn.javabackend.services;
 
 import com.learn.javabackend.entity.UserEntity;
-import com.learn.javabackend.repository.UserRepo;
+import com.learn.javabackend.repository.TodoRepository;
 import com.learn.javabackend.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,22 +15,22 @@ import java.util.Optional;
 public class ResponseEntityService {
 
     @Autowired
-    private UserRepo userRepo;
+    private TodoRepository todoRepository;
 
     public ResponseEntity<Response<String>> createUser(UserEntity userData) {
-        userRepo.save(userData);
+        todoRepository.save(userData);
         Response<String> response = new Response<>("success", "User created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Response<List<UserEntity>>> getAllUsers() {
-        List<UserEntity> users = userRepo.findAll();
+        List<UserEntity> users = todoRepository.findAll();
         Response<List<UserEntity>> response = new Response<>("success", "Users retrieved successfully", users);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public ResponseEntity<Response<UserEntity>> getUserById(String id) {
-        Optional<UserEntity> user = userRepo.findById(id);
+        Optional<UserEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
             Response<UserEntity> response = new Response<>("success", "User retrieved successfully", user.get());
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -41,7 +41,7 @@ public class ResponseEntityService {
     }
 
     public ResponseEntity<Response<UserEntity>> updateUser(String id, UserEntity updatedData) {
-        Optional<UserEntity> user = userRepo.findById(id);
+        Optional<UserEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
             UserEntity existingUser = user.get();
             if (updatedData.getTitle() != null) {
@@ -50,7 +50,7 @@ public class ResponseEntityService {
             if (updatedData.getContent() != null) {
                 existingUser.setContent(updatedData.getContent());
             }
-            UserEntity updatedUser = userRepo.save(existingUser);
+            UserEntity updatedUser = todoRepository.save(existingUser);
             Response<UserEntity> response = new Response<>("success", "User updated successfully", updatedUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
@@ -60,9 +60,9 @@ public class ResponseEntityService {
     }
 
     public ResponseEntity<Response<String>> deleteUser(String id) {
-        Optional<UserEntity> user = userRepo.findById(id);
+        Optional<UserEntity> user = todoRepository.findById(id);
         if (user.isPresent()) {
-            userRepo.deleteById(id);
+            todoRepository.deleteById(id);
             Response<String> response = new Response<>("success", "User deleted successfully");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } else {
