@@ -1,6 +1,6 @@
 package com.learn.javabackend.controllers;
 
-import com.learn.javabackend.entity.UserEntity;
+import com.learn.javabackend.entity.TodoEntity;
 import com.learn.javabackend.response.Response;
 import com.learn.javabackend.services.ResponseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +17,22 @@ public class ResponseEntityController {
     private ResponseEntityService todoService;
 
     @PostMapping
-    public ResponseEntity<Response<String>> createUser(@RequestBody UserEntity userData) {
+    public ResponseEntity<Response<String>> createUser(@RequestBody TodoEntity userData) {
         return todoService.createUser(userData);
     }
 
     @GetMapping
-    public ResponseEntity<Response<List<UserEntity>>> getAllUsers() {
+    public ResponseEntity<Response<List<TodoEntity>>> getAllUsers() {
         return todoService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<UserEntity>> getUserById(@PathVariable String id) {
+    public ResponseEntity<Response<TodoEntity>> getUserById(@PathVariable String id) {
         return todoService.getUserById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<UserEntity>> updateUser(@PathVariable String id, @RequestBody UserEntity userData) {
+    public ResponseEntity<Response<TodoEntity>> updateUser(@PathVariable String id, @RequestBody TodoEntity userData) {
         return todoService.updateUser(id, userData);
     }
 

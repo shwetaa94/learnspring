@@ -1,6 +1,6 @@
 package com.learn.javabackend.services;
 
-import com.learn.javabackend.entity.UserEntity;
+import com.learn.javabackend.entity.TodoEntity;
 import com.learn.javabackend.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,23 +17,23 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public void createUser(UserEntity userData){
+    public void createUser(TodoEntity userData){
         todoRepository.insert(userData);
     }
 
-    public List<UserEntity> getAllUsers(){
+    public List<TodoEntity> getAllUsers(){
         return todoRepository.findAll();
     }
 
-    public UserEntity getUserById(String Id){
-        Optional<UserEntity> user = todoRepository.findById(Id);
+    public TodoEntity getUserById(String Id){
+        Optional<TodoEntity> user = todoRepository.findById(Id);
         return user.orElse(null);
     }
 
-    public UserEntity updateUser(String Id, UserEntity updatedData){
-        Optional<UserEntity> user = todoRepository.findById(Id);
+    public TodoEntity updateUser(String Id, TodoEntity updatedData){
+        Optional<TodoEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
-            UserEntity existingUser = user.get();
+            TodoEntity existingUser = user.get();
 
             if(updatedData.getTitle()!=null){
                 existingUser.setTitle(updatedData.getTitle());
@@ -46,8 +46,8 @@ public class TodoService {
         return user.orElse(null);
     }
 
-    public UserEntity deleteUser(String Id){
-        Optional<UserEntity> user = todoRepository.findById(Id);
+    public TodoEntity deleteUser(String Id){
+        Optional<TodoEntity> user = todoRepository.findById(Id);
         if(user.isPresent()){
              todoRepository.deleteById(Id);
         }
