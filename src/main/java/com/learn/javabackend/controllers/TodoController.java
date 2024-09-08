@@ -1,8 +1,11 @@
 package com.learn.javabackend.controllers;
 
 import com.learn.javabackend.entity.TodoEntity;
+import com.learn.javabackend.response.Response;
 import com.learn.javabackend.services.TodoService;
+import com.learn.javabackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,31 +13,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/todo")
 public class TodoController {
+
     @Autowired
     private TodoService todoService;
 
+
     @PostMapping
-    public String createTodo(@RequestBody TodoEntity todoData){
-        todoService.createTodo(todoData);
-        return "Data Saved Successfully";
+    public ResponseEntity<Response<String>> createTodo(@RequestBody TodoEntity todoData) {
+        return todoService.createTodo(todoData);
     }
 
     @GetMapping
-    public List<TodoEntity> getAllTodos(){
+    public ResponseEntity<Response<List<TodoEntity>>> getAllUsers() {
         return todoService.getAllTodos();
     }
-    @GetMapping("/{Id}")
-    public TodoEntity getTodoById(@PathVariable String Id){
-        return todoService.getTodoById(Id);
-    }
-    @PutMapping("/{Id}")
-    public TodoEntity updateTodo(@PathVariable String Id, @RequestBody TodoEntity userData){
-        return todoService.updateTodo(Id, userData);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<TodoEntity>> getTodoById(@PathVariable String id) {
+        return todoService.getTodoById(id);
     }
 
-    @DeleteMapping("/{Id}")
-    public TodoEntity deleteUser(@PathVariable String Id){
-        return todoService.deleteTodo(Id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Response<TodoEntity>> updateTodo(@PathVariable String id, @RequestBody TodoEntity userData) {
+        return todoService.updateTodo(id, userData);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<String>> deleteTodor(@PathVariable String id) {
+        return todoService.deleteTodo(id);
+    }
 }
