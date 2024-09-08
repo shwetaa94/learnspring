@@ -50,9 +50,9 @@ public class UserService {
         Optional<UserEntity> user = userRepository.findById(id);
         if (user.isPresent()) {
             UserEntity existingUser = user.get();
-            if (updatedData.getUsername() != null) {
-                existingUser.setUsername(updatedData.getUsername());
-            }
+            existingUser.setUsername(updatedData.getUsername());
+            existingUser.setPassword(updatedData.getPassword());
+
             UserEntity updatedUser = userRepository.save(existingUser);
             Response<UserEntity> response = new Response<>("success", "User updated successfully", updatedUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
