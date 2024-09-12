@@ -3,6 +3,7 @@ package com.learn.javabackend.controllers;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.learn.javabackend.entity.UserEntity;
 import com.learn.javabackend.response.Response;
+import com.learn.javabackend.services.TodoService;
 import com.learn.javabackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired TodoService todoService;
 
     // Create a new user
     @PostMapping
@@ -42,8 +45,9 @@ public class UserController {
     }
 
     // Delete a user by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Response<String>> deleteUser(@PathVariable String id) {
-        return userService.deleteUser(id);
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Response<String>> deleteUser(@PathVariable String username) {
+
+        return userService.deleteUser(username);
     }
 }
