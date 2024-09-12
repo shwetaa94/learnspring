@@ -27,8 +27,7 @@ public class UserEntity {
     private String password;
 
     @DBRef
-    private List<TodoEntity> todoEntities= new ArrayList
-            <TodoEntity>();
+    private List<TodoEntity> todoEntities= new ArrayList<TodoEntity>();
 
     @CreatedDate
     private LocalDateTime createdAt;

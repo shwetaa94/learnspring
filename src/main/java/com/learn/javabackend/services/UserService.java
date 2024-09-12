@@ -3,6 +3,7 @@ package com.learn.javabackend.services;
 import com.learn.javabackend.entity.UserEntity;
 import com.learn.javabackend.repository.UserRepository;
 import com.learn.javabackend.response.Response;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,10 @@ public class UserService {
     }
 
     // Get user by ID
-    public ResponseEntity<Response<UserEntity>> getUserById(String id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            Response<UserEntity> response = new Response<>("success", "User retrieved successfully", user.get());
+    public ResponseEntity<Response<UserEntity>> getUserById(String username) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user!=null) {
+            Response<UserEntity> response = new Response<>("success", "User retrieved successfully", user);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             Response<UserEntity> response = new Response<>("error", "User not found");
@@ -46,14 +47,13 @@ public class UserService {
     }
 
     // Update an existing user
-    public ResponseEntity<Response<UserEntity>> updateUser(String id, UserEntity updatedData) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            UserEntity existingUser = user.get();
-            existingUser.setUsername(updatedData.getUsername());
-            existingUser.setPassword(updatedData.getPassword());
+    public ResponseEntity<Response<UserEntity>> updateUser(String username, UserEntity updatedData) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user!=null) {
+            user.setUsername(updatedData.getUsername());
+            user.setPassword(updatedData.getPassword());
 
-            UserEntity updatedUser = userRepository.save(existingUser);
+            UserEntity updatedUser = userRepository.save(user);
             Response<UserEntity> response = new Response<>("success", "User updated successfully", updatedUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
@@ -63,10 +63,10 @@ public class UserService {
     }
 
     // Delete a user by ID
-    public ResponseEntity<Response<String>> deleteUser(String id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            userRepository.deleteById(id);
+    public ResponseEntity<Response<String>> deleteUser(String username) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user!=null) {
+            userRepository.deleteById(user.getId());
             Response<String> response = new Response<>("success", "User deleted successfully");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } else {
@@ -75,4 +75,7 @@ public class UserService {
         }
     }
 
+    public UserEntity findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
 }

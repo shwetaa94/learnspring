@@ -30,15 +30,15 @@ public class UserController {
     }
 
     // Get user by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Response<UserEntity>> getUserById(@PathVariable String id) {
-        return userService.getUserById(id);
+    @GetMapping("/{username}")
+    public ResponseEntity<Response<UserEntity>> getUserById(@PathVariable String username) {
+        return userService.getUserById(username);
     }
 
     // Update an existing user
-    @PutMapping("/{id}")
-    public ResponseEntity<Response<UserEntity>> updateUser(@PathVariable String id, @RequestBody UserEntity userData) {
-        return userService.updateUser(id, userData);
+    @PutMapping("/{username}")
+    public ResponseEntity<Response<UserEntity>> updateUser(@PathVariable String username, @RequestBody UserEntity userData) {
+        return userService.updateUser(username, userData);
     }
 
     // Delete a user by ID
