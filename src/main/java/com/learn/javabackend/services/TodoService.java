@@ -1,6 +1,7 @@
 package com.learn.javabackend.services;
 
 import com.learn.javabackend.entity.TodoEntity;
+import com.learn.javabackend.entity.UserEntity;
 import com.learn.javabackend.repository.TodoRepository;
 import com.learn.javabackend.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,14 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public ResponseEntity<Response<String>> createTodo(TodoEntity todoData) {
-        todoRepository.save(todoData);
+    @Autowired
+    private UserService userService;
+
+    public ResponseEntity<Response<String>> createTodo(TodoEntity todoData, String username) {
+        UserEntity user = userService.findByUsername(username);
+        TodoEntity saved = todoRepository.save(todoData);
+        user.getTodoEntities().add(saved);
+        userService.createUser(user);
         Response<String> response = new Response<>("success", "User created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -72,5 +79,5 @@ public class TodoService {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }

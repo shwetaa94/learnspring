@@ -18,9 +18,9 @@ public class TodoController {
     private TodoService todoService ;
 
 
-    @PostMapping
-    public ResponseEntity<Response<String>> createTodo(@RequestBody TodoEntity todoData) {
-        return todoService.createTodo(todoData);
+    @PostMapping("/{username}")
+    public ResponseEntity<Response<String>> createTodo(@RequestBody TodoEntity todoData, @PathVariable String username) {
+        return todoService.createTodo(todoData, username);
     }
 
     @GetMapping
