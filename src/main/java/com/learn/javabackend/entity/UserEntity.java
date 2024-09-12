@@ -1,5 +1,6 @@
 package com.learn.javabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;

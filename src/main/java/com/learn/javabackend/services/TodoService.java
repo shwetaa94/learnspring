@@ -24,10 +24,24 @@ public class TodoService {
     private UserService userService;
 
     public ResponseEntity<Response<String>> createTodo(TodoEntity todoData, String username) {
+        // Retrieve the user by username
         UserEntity user = userService.findByUsername(username);
+        if (user == null) {
+            // If the user is not found, return an error response
+            Response<String> response = new Response<>("error", "User not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+        // Set the user reference on the TodoEntity
+        todoData.setUser(user);  // Assuming you have a user field in TodoEntity
+
+        // Save the TodoEntity
         TodoEntity saved = todoRepository.save(todoData);
+
+        // Add the saved TodoEntity to the user's todo list
         user.getTodoEntities().add(saved);
+        // Save the updated UserEntity
         userService.createUser(user);
+
         Response<String> response = new Response<>("success", "User created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

@@ -1,6 +1,7 @@
 package com.learn.javabackend.services;
 
 import com.learn.javabackend.entity.UserEntity;
+import com.learn.javabackend.repository.TodoRepository;
 import com.learn.javabackend.repository.UserRepository;
 import com.learn.javabackend.response.Response;
 import org.apache.catalina.User;
@@ -19,6 +20,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TodoRepository todoRepository;
 
     // Create a new user
     public ResponseEntity<Response<String>> createUser(UserEntity userData) {
@@ -66,7 +70,11 @@ public class UserService {
     public ResponseEntity<Response<String>> deleteUser(String username) {
         UserEntity user = userRepository.findByUsername(username);
         if (user!=null) {
+            // Delete all todos associated with the user
+            todoRepository.deleteAllByUser(user);
+            //Delete the user
             userRepository.deleteById(user.getId());
+
             Response<String> response = new Response<>("success", "User deleted successfully");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } else {
